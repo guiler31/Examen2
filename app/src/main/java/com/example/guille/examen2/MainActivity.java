@@ -1,8 +1,13 @@
 package com.example.guille.examen2;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +23,8 @@ import com.facebook.login.LoginResult;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -28,19 +35,24 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 
-public class MainActivity extends AppCompatActivity  {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
 
     public LoginFragment loginFragment;
     public RegisterFragment registerFragment;
     public MainActivityEvents mainActivityEvents;
-
+    public DatabaseHandler databaseHandler;
+    public FusedLocationProviderClient mFusedLocationClient;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //Asignacion de xml
         setContentView(R.layout.activity_main);
@@ -81,6 +93,10 @@ public class MainActivity extends AppCompatActivity  {
 
         DataHolder.instances.firebaseAdmin.setListener(mainActivityEvents);
         //Transiciones entre fragments
+        DataHolder.instances.firebaseAdmin.descargarYObservarRama("Users");
+        GenericTypeIndicator<ArrayList<Contact>> indicator= new GenericTypeIndicator<ArrayList<Contact>>(){};
+       // ArrayList<Contact> users=dataSnapshot.getValue(indicator);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.hide(registerFragment);
         transaction.show(loginFragment);
@@ -129,6 +145,9 @@ class MainActivityEvents implements LoginFragmentListener, RegisterFragmentsList
     public MainActivity mainActivity;
     public DatabaseReference ref;
     public GeoFire geoFire;
+    public FusedLocationProviderClient mFusedLocationClient;
+
+    public DatabaseHandler databaseHandler;
     public MainActivityEvents(MainActivity mainActivity){
         this.mainActivity = mainActivity;
     }
@@ -136,6 +155,7 @@ class MainActivityEvents implements LoginFragmentListener, RegisterFragmentsList
     @Override
     public void OnclickedLoginButton(String email, String pass) {
         DataHolder.instances.firebaseAdmin.LoginEmailPass(email,pass,mainActivity);
+
     }
 
     @Override
@@ -178,22 +198,42 @@ class MainActivityEvents implements LoginFragmentListener, RegisterFragmentsList
     @Override
     public void loginOK(boolean itsOk) {
         if (itsOk){
-            //Hacer metodos cuando el login esta bien
-            ref = FirebaseDatabase.getInstance().getReference("Location");
-            geoFire = new GeoFire(ref);
-            geoFire.setLocation("l", new GeoLocation(37.7853889, -122.4056973), new GeoFire.CompletionListener() {
-                @Override
-                public void onComplete(String key, DatabaseError error) {
-                    if (error != null) {
-                        System.err.println("There was an error saving the location to GeoFire: " + error);
-                    } else {
-                        System.out.println("Location saved on server successfully!");
-                    }
-                }
-            });
             Intent intent=new Intent(mainActivity,SecondActivity.class);
             mainActivity.startActivity(intent);
             mainActivity.finish();
+            //Hacer metodos cuando el login esta bien
+            try {
+                ref = FirebaseDatabase.getInstance().getReference("Location");
+                geoFire = new GeoFire(ref);
+                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mainActivity);
+                if (ActivityCompat.checkSelfPermission(mainActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mainActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                Location location=mFusedLocationClient.getLastLocation().getResult();
+
+                geoFire.setLocation("l", new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                    @Override
+                    public void onComplete(String key, DatabaseError error) {
+                        if (error != null) {
+                            System.err.println("There was an error saving the location to GeoFire: " + error);
+                        } else {
+                            System.out.println("Location saved on server successfully!");
+                        }
+                    }
+                });
+            }catch (Exception exce){
+                Log.v("ex",exce.toString());
+
+            }
+
+            
             Log.v("MAINAKAHFG","BIEN EL LOGIN");
         }
     }

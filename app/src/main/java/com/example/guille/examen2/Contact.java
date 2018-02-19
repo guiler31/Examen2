@@ -1,10 +1,16 @@
 package com.example.guille.examen2;
 
 
-public class Contact {
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+@IgnoreExtraProperties
+public class Contact{
     //private variables
     int _id;
-    String _name;
+    String _pass;
     String _email;
 
     // Empty constructor
@@ -12,15 +18,15 @@ public class Contact {
 
     }
     // constructor
-    public Contact(int id, String name, String _email){
+    public Contact(int id, String pass, String _email){
         this._id = id;
-        this._name = name;
+        this._pass = pass;
         this._email = _email;
     }
 
     // constructor
-    public Contact(String name, String _email){
-        this._name = name;
+    public Contact(String pass, String _email){
+        this._pass = pass;
         this._email = _email;
     }
     // getting ID
@@ -34,13 +40,13 @@ public class Contact {
     }
 
     // getting name
-    public String get_name(){
-        return this._name;
+    public String get_pass(){
+        return this._pass;
     }
 
     // setting name
-    public void set_name(String name){
-        this._name = name;
+    public void set_pass(String pass){
+        this._pass = pass;
     }
 
     // getting phone number
@@ -52,5 +58,6 @@ public class Contact {
     public void set_email(String email){
         this._email = email;
     }
+
 
 }

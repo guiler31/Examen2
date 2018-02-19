@@ -5,13 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jorge on 17/02/2018.
- */
 
     public class DatabaseHandler extends SQLiteOpenHelper {
         // All Static variables
@@ -26,7 +24,7 @@ import java.util.List;
 
         // Contacts Table Columns names
         private static final String KEY_ID = "id";
-        private static final String KEY_NAME = "name";
+        private static final String KEY_PASS = "pass";
         private static final String KEY_EMAIL = "email";
 
         public DatabaseHandler(Context context) {
@@ -37,7 +35,7 @@ import java.util.List;
         @Override
         public void onCreate(SQLiteDatabase db) {
             String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
-                    + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                    + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PASS + " TEXT,"
                     + KEY_EMAIL + " TEXT" + ")";
             db.execSQL(CREATE_CONTACTS_TABLE);
         }
@@ -58,8 +56,8 @@ import java.util.List;
 
             ContentValues values = new ContentValues();
             values.put(KEY_ID, contact.get_id()); // Contact Name
-            values.put(KEY_NAME, contact.get_name()); // Contact Name
-            values.put(KEY_EMAIL, contact.get_email()); // Contact Phone Number
+            values.put(KEY_PASS, contact.get_pass()); // Contact Name
+            values.put(KEY_EMAIL, contact.get_email()); // ContactEmail
 
             // Inserting Row
             db.insert(TABLE_USERS, null, values);
@@ -71,7 +69,7 @@ import java.util.List;
             SQLiteDatabase db = this.getReadableDatabase();
 
             Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID,
-                            KEY_NAME, KEY_EMAIL }, KEY_ID + "=?",
+                            KEY_PASS, KEY_EMAIL }, KEY_ID + "=?",
                     new String[] { String.valueOf(id) }, null, null, null, null);
             if (cursor != null)
                 cursor.moveToFirst();
@@ -95,7 +93,7 @@ import java.util.List;
                 do {
                     Contact contact = new Contact();
                     contact.set_id(Integer.parseInt(cursor.getString(0)));
-                    contact.set_name(cursor.getString(1));
+                    contact.set_pass(cursor.getString(1));
                     contact.set_email(cursor.getString(2));
                     // Adding contact to list
                     contactList.add(contact);

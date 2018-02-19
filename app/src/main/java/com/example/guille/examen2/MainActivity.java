@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity  {
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 Log.v("LogFB", "bien");
+                Intent intent= new Intent(MainActivity.super.getParent(),SecondActivity.class);
+                startActivity(intent);
+                finish();
                 handleFacebookAccessToken(loginResult.getAccessToken());
 
 
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity  {
 //Creacion de subclase events para gestionar los eventos de los fragments y el listener de firebase
 class MainActivityEvents implements LoginFragmentListener, RegisterFragmentsListener, FirebaseAdminListener{
 
-    MainActivity mainActivity;
+    public MainActivity mainActivity;
     public MainActivityEvents(MainActivity mainActivity){
         this.mainActivity = mainActivity;
     }

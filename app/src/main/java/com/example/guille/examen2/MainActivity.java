@@ -15,6 +15,9 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -22,6 +25,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -30,9 +36,12 @@ public class MainActivity extends AppCompatActivity  {
     public MainActivityEvents mainActivityEvents;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Asignacion de xml
         setContentView(R.layout.activity_main);
         //Importacion de fragments con sus respectivos xml
@@ -118,6 +127,8 @@ public class MainActivity extends AppCompatActivity  {
 class MainActivityEvents implements LoginFragmentListener, RegisterFragmentsListener, FirebaseAdminListener{
 
     public MainActivity mainActivity;
+    public DatabaseReference ref;
+    public GeoFire geoFire;
     public MainActivityEvents(MainActivity mainActivity){
         this.mainActivity = mainActivity;
     }
@@ -168,6 +179,18 @@ class MainActivityEvents implements LoginFragmentListener, RegisterFragmentsList
     public void loginOK(boolean itsOk) {
         if (itsOk){
             //Hacer metodos cuando el login esta bien
+            ref = FirebaseDatabase.getInstance().getReference("Location");
+            geoFire = new GeoFire(ref);
+            geoFire.setLocation("l", new GeoLocation(37.7853889, -122.4056973), new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
+                    if (error != null) {
+                        System.err.println("There was an error saving the location to GeoFire: " + error);
+                    } else {
+                        System.out.println("Location saved on server successfully!");
+                    }
+                }
+            });
             Intent intent=new Intent(mainActivity,SecondActivity.class);
             mainActivity.startActivity(intent);
             mainActivity.finish();

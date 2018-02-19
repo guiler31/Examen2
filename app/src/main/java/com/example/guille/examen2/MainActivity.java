@@ -43,7 +43,31 @@ public class MainActivity extends AppCompatActivity  {
         //Asignacion de listener para los fragments
         loginFragment.setListener(mainActivityEvents);
         registerFragment.setListener(mainActivityEvents);
+        //Asignacion de callback para el boton de facebook incluido en el loginfragment
+        loginFragment.loginButton.registerCallback(loginFragment.callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                Log.v("LogFB", "bien");
+                handleFacebookAccessToken(loginResult.getAccessToken());
 
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Log.v("LogFB", "can");
+
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Log.v("LogFB", "mal");
+
+            }
+        });
 
         DataHolder.instances.firebaseAdmin.setListener(mainActivityEvents);
         //Transiciones entre fragments

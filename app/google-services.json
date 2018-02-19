@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "956260948623",
+    "firebase_url": "https://examen2-f0e78.firebaseio.com",
+    "project_id": "examen2-f0e78",
+    "storage_bucket": "examen2-f0e78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956260948623:android:b39bed22819ada24",
+        "android_client_info": {
+          "package_name": "com.example.guille.examen2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956260948623-nj5gmc5c80mreie9fj2lm46ioq2okji8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5c-pleWoXYk7QLAn6CKIjESUyVuOtgPI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

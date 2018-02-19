@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Examen2</string>
+    <!-- id del proyecto de facebook -->
+    <string name="facebook_app_id">1771634249813044</string>
+    <string name="fb_login_protocol_scheme">fb1771634249813044</string>
+</resources>

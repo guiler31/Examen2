@@ -11,10 +11,11 @@ import android.view.View;
  */
 
 public class SecondActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
     }
 
@@ -27,7 +28,7 @@ public class SecondActivity extends AppCompatActivity {
             Log.v("MainActivity", "map");
         } else if (v.getId() == R.id.btnDint) {
             Log.v("MainActivity", "dint");
-            Intent intent4 = new Intent(getApplicationContext(), nav_drawer.class);
+           Intent intent4 = new Intent(getApplicationContext(), nav_drawer.class);
             startActivity(intent4);
         }
     }

@@ -25,9 +25,9 @@ import com.google.firebase.database.DataSnapshot;
 
 public class MainActivity extends AppCompatActivity  {
 
-    LoginFragment loginFragment;
-    RegisterFragment registerFragment;
-
+    public LoginFragment loginFragment;
+    public RegisterFragment registerFragment;
+    public MainActivityEvents mainActivityEvents;
 
 
     @Override
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity  {
         loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.frgLogin);
         registerFragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.frgRegister);
         //Creacion de escuchador de eventos
-        MainActivityEvents mainActivityEvents = new MainActivityEvents(this);
+        mainActivityEvents = new MainActivityEvents(this);
         //Asignacion de listener para los fragments
         loginFragment.setListener(mainActivityEvents);
         registerFragment.setListener(mainActivityEvents);
@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity  {
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 Log.v("LogFB", "bien");
-                Intent intent= new Intent(MainActivity.super.getParent(),SecondActivity.class);
-                startActivity(intent);
-                finish();
+                MainActivity.this.mainActivityEvents.loginOK(true);
                 handleFacebookAccessToken(loginResult.getAccessToken());
 
 
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = DataHolder.instances.firebaseAdmin.mAuth.getCurrentUser();
                             Log.v("arr", user.getEmail());
+
                             //updateUI(user);
 
                         } else {

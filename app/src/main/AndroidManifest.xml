@@ -38,6 +38,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.guille.examen2.SecondActivity"></activity>
+        <activity
+            android:name=".nav_drawer"
+            android:label="@string/title_activity_nav_drawer"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

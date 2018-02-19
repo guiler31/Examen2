@@ -23,33 +23,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.071" />
 
-    <Button
-        android:id="@+id/btnTwitter"
-        android:layout_width="131dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/btnTwitter"
-        android:onClick="botonClicked"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitulo"
-        app:layout_constraintVertical_bias="0.109" />
 
     <Button
         android:id="@+id/btnSql"
         android:layout_width="131dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="112dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/btnSql"
         android:onClick="botonClicked"
+        android:text="@string/btnSql"
         app:layout_constraintBottom_toBottomOf="@+id/btnDint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -65,14 +49,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/btnMap"
         android:onClick="botonClicked"
+        android:text="@string/btnMap"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSql"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.601" />
 
     <Button
         android:id="@+id/btnDint"
@@ -81,11 +65,14 @@
         android:layout_marginBottom="68dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/btnDint"
+        android:layout_marginTop="8dp"
         android:onClick="botonClicked"
+        android:text="@string/btnDint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.665" />
 
 </android.support.constraint.ConstraintLayout>

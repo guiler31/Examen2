@@ -3,4 +3,14 @@
     <!-- id del proyecto de facebook -->
     <string name="facebook_app_id">1771634249813044</string>
     <string name="fb_login_protocol_scheme">fb1771634249813044</string>
+    <!--STRINGS DE LA Second ACTIVITY-->
+    <string name="txtTitulo">Apartados del Examen</string>
+    <string name="btnSql">SQL + Firebase</string>
+    <string name="btnMap">Map Fragment</string>
+    <string name="btnDint">Dint</string>
+
+    <!--STRINGS DEL NAV DRAWER-->
+    <string name="txtColor_1">Este es el primer color global</string>
+    <string name="txtColor_2">Este es el segundo color global</string>
+    <string name="txtColor_3">Este es el tercer color global</string>
 </resources>
